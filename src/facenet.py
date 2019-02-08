@@ -240,16 +240,16 @@ def to_rgb(img):
     ret[:, :, 0] = ret[:, :, 1] = ret[:, :, 2] = img
     return ret
   
-def load_data(image_paths, do_random_crop, do_random_flip, image_size, do_prewhiten=True):
+def load_data(image_paths, do_random_crop, do_random_flip, image_height, image_width, do_prewhiten=True):
     nrof_samples = len(image_paths)
-    images = np.zeros((nrof_samples, image_size, image_size, 3))
+    images = np.zeros((nrof_samples, image_height, image_width, 3))
     for i in range(nrof_samples):
         img = misc.imread(image_paths[i])
         if img.ndim == 2:
             img = to_rgb(img)
         if do_prewhiten:
             img = prewhiten(img)
-        img = crop(img, do_random_crop, image_size)
+        #img = crop(img, do_random_crop, image_size)
         img = flip(img, do_random_flip)
         images[i,:,:,:] = img
     return images
